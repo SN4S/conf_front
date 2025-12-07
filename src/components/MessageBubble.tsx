@@ -1,6 +1,7 @@
 import React from 'react';
 import { User, Bot } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 interface MessageBubbleProps {
     role: 'user' | 'assistant';
@@ -21,15 +22,16 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ role, content }) =
                 </div>
 
                 {/* Message Content */}
-                <div className={`px-4 py-3 rounded-2xl ${isUser
+                <div className={`px-4 py-3 rounded-2xl min-w-0 ${isUser
                     ? 'bg-blue-600 text-white rounded-tr-sm'
                     : 'bg-gray-800 text-gray-100 rounded-tl-sm border border-gray-700'
                     }`}>
                     {isUser ? (
                         <p className="whitespace-pre-wrap leading-relaxed">{content}</p>
                     ) : (
-                        <div className="prose prose-invert prose-sm max-w-none">
+                        <div className="prose prose-invert prose-sm max-w-full break-words">
                             <ReactMarkdown
+                                remarkPlugins={[remarkGfm]}
                                 components={{
                                     // Customize markdown rendering
                                     p: ({ children }) => <p className="mb-2 last:mb-0 leading-relaxed">{children}</p>,
@@ -56,6 +58,18 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ role, content }) =
                                     blockquote: ({ children }) => (
                                         <blockquote className="border-l-4 border-gray-600 pl-4 italic my-2">{children}</blockquote>
                                     ),
+                                    table: ({ children }) => (
+                                        <div className="w-full overflow-x-auto overflow-y-auto max-h-96 my-4 border border-gray-700 rounded-lg scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-transparent">
+                                            <table className="min-w-full divide-y divide-gray-700 text-sm">{children}</table>
+                                        </div>
+                                    ),
+                                    thead: ({ children }) => <thead className="bg-gray-900 sticky top-0 z-10">{children}</thead>,
+                                    tbody: ({ children }) => <tbody className="divide-y divide-gray-700 bg-gray-800">{children}</tbody>,
+                                    tr: ({ children }) => <tr className="hover:bg-gray-700/50 transition-colors">{children}</tr>,
+                                    th: ({ children }) => (
+                                        <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">{children}</th>
+                                    ),
+                                    td: ({ children }) => <td className="px-4 py-3 whitespace-nowrap text-gray-300">{children}</td>,
                                 }}
                             >
                                 {content}

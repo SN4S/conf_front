@@ -2,9 +2,6 @@
 
 A modern, feature-rich chat interface built with React, TypeScript, and Vite. This application provides a ChatGPT-like experience with conversation management, persistence, and a clean, responsive UI.
 
-## Features
-
-
 ## Tech Stack
 
 - **React 19** - Modern React with hooks
@@ -16,14 +13,14 @@ A modern, feature-rich chat interface built with React, TypeScript, and Vite. Th
 
 ## Prerequisites
 
-- Node.js (v16 or higher)
+- Node.js (v18 or higher)
 - npm or yarn
 
 ## Installation
 
 1. **Clone the repository** (if applicable)
    ```bash
-   cd /home/sn4s/front_chat/frontend
+   cd frontend
    ```
 
 2. **Install dependencies**
